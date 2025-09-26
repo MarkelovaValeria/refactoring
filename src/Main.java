@@ -1,49 +1,40 @@
 public class Main {
     public static void main(String[] args) {
-        humanIMB humanIMB = new humanIMB(80,1.52);
-        System.out.println(humanIMB.Result());
+        HumanBMI humanBMI = new HumanBMI(80,1.52);
+        System.out.println(humanBMI.getResult());
     }
 }
-class humanIMB {
-    public double W; //Weight Human
-    public double H; // Height Human
-    private static double imb;
-    public humanIMB(double w, double h) {
-        W = w;
-        H = h;
-        imb = W / (H * H);
-    }
-    public double takeW() {
-        return W;
-    }
-    public void putW(double w) {
-        W = w;
-        imb = W / (H * H);
-    }
-    public double takeH() {
-        return H;
-    }
-    public void putH(double h) {
-        H = h;
-        imb = W / (H * H);
-    }
-    public static double takeImt() {
-        return imb;
-    }
-    public static String Result() {
-        String  string = null;
-        if (imb >=18.5 & imb <25) {
-            string ="Norm";
+class HumanBMI {
+    private double weight; //Weight Human
+    private double height; // Height Human
+    public HumanBMI(double weight, double height) {
+        if (height <= 0) {
+            throw new IllegalArgumentException("Height must be greater than zero");
         }
-        if (imb >=25 & imb <30) {
-            string ="Warning! ";
-        }
-        if (imb >=30) {
-            string ="Fat";
-        }
-        if (imb <18.5) {
-            string ="Deficit";
-        }
-        return string;
+        this.weight = weight;
+        this.height = height;
+    }
+    public double getWeight() {
+        return weight;
+    }
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+    public double getHeight() {
+        return height;
+    }
+    public void setHeight(double height) {
+        if (height <= 0) throw new IllegalArgumentException("Height must be > 0");
+        this.height = height;
+    }
+    public double getBMI() {
+        return weight/(height * height);
+    }
+    public String getResult() {
+        double bmi = getBMI();
+        if (bmi < 18.5) return "Deficit";
+        else if (bmi < 25) return "Normal";
+        else if (bmi < 30) return "Warning!";
+        else return "Fat";
     }
 }
